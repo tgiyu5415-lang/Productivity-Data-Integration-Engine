@@ -1,7 +1,12 @@
 <div align="center">
 
 <!-- Banner -->
-<img src="./docs/assets/banner.svg" width="100%" />
+<div align="center">
+
+# ⚙️ ESD — QC Productivity & Data Integration Engine
+### Enterprise Edition · v11.1.7.1.4
+
+</div>
 
 <!-- Badges -->
 [![Version](https://img.shields.io/badge/version-11.1.7.1.4-6C63FF?style=for-the-badge)](./version.txt)

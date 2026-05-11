@@ -6,7 +6,7 @@
 
 ![Version](https://img.shields.io/badge/version-11.1.7.1.4-blue?style=flat-square)
 ![Language](https://img.shields.io/badge/language-JavaScript-yellow?style=flat-square)
-![Platform](https://img.shields.io/badge/platform-Tampermonkey%20%7C%20Greasemonkey-green?style=flat-square)
+![Platform](https://img.shields.io/badge/platform-Tampermonkey-green?style=flat-square)
 ![Status](https://img.shields.io/badge/status-Active-brightgreen?style=flat-square)
 
 </div>
@@ -17,20 +17,20 @@
 
 **ESD (Enterprise Script Dispatcher)** is a modular userscript automation framework designed to streamline and enforce quality control workflows in enterprise production environments.
 
-Built to replace manual, error-prone review processes with automated, deterministic enforcement logic — ESD injects structured validation layers directly into web-based QC platforms, reducing human error and improving throughput consistency across distributed remote teams.
+Built to replace manual, error-prone review processes with automated, deterministic enforcement logic - ESD injects structured validation layers directly into web-based QC platforms, reducing human error and improving throughput consistency across distributed remote teams.
 
-> Developed to support high-volume QC pipelines processing **1,000+ items/day** with a target accuracy rate of **98–99%**.
+> Developed to support high-volume QC pipelines processing **2,500+ items/day** with a target accuracy rate of **98–99%**.
 
 ---
 
 ## Key Features
 
-- **Automated workflow enforcement** — reduces manual review steps through script-driven logic
-- **Modular architecture** — core engine decoupled from loader for clean separation of concerns
-- **Versioned release management** — tracked via `version.txt` with semantic versioning
-- **Enterprise refactor support** — `qc-enterprise-new.user.js` introduces restructured logic
-- **Config-driven behavior** — runtime configuration separated from core logic
-- **License-controlled distribution** — access managed via `license.json`
+- **Automated workflow enforcement** - reduces manual review steps through script-driven logic
+- **Modular architecture** - core engine decoupled from loader for clean separation of concerns
+- **Versioned release management** - tracked via `version.txt` with semantic versioning
+- **Enterprise refactor support** - `qc-enterprise-new.user.js` introduces restructured logic
+- **Config-driven behavior** - runtime configuration separated from core logic
+- **License-controlled distribution** - access managed via `license.json`
 
 ---
 
@@ -82,7 +82,7 @@ oslo/
 ## Security Considerations
 
 - Script execution is **sandboxed** within the browser userscript engine
-- No external API calls — all logic runs client-side
+- No external API calls - all logic runs client-side
 - License validation via `license.json` controls authorized deployment
 - Configuration is separated from logic for auditable rule changes
 

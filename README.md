@@ -8,15 +8,6 @@
 
 </div>
 
-<!-- Badges -->
-[![Version](https://img.shields.io/badge/version-11.1.7.1.4-6C63FF?style=for-the-badge)](./version.txt)
-[![Language](https://img.shields.io/badge/JavaScript-ES6%2B-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](.)
-[![Platform](https://img.shields.io/badge/Tampermonkey-00485B?style=for-the-badge&logo=tampermonkey&logoColor=white)](.)
-[![Codebase](https://img.shields.io/badge/codebase-3%2C670%2B%20lines-orange?style=for-the-badge)](.)
-[![Users](https://img.shields.io/badge/licensed%20users-11%20active-brightgreen?style=for-the-badge)](./license.json)
-[![License](https://img.shields.io/badge/license-Proprietary-red?style=for-the-badge)](.)
-[![Status](https://img.shields.io/badge/status-Production%20Active-success?style=for-the-badge)](.)
-
 <br/>
 
 > **A production-grade, full-stack enterprise application** built in vanilla JavaScript -  
@@ -33,6 +24,7 @@
 ## Table of Contents
 
 - [Overview](#-overview)
+- [File Structure](#-file-structure)
 - [System Architecture](#-system-architecture)
 - [Features](#-features)
   - [Frontend & UI Engine](#-frontend--ui-engine)
@@ -44,10 +36,9 @@
   - [Security & License System](#-security--license-system)
 - [Tech Stack](#-tech-stack)
 - [State Management](#-state-management)
-- [File Structure](#-file-structure)
 - [Key Design Decisions](#-key-design-decisions)
 - [Impact Metrics](#-impact-metrics)
-- [Changelog](#-changelog)
+- [Roadmap](#-roadmap)
 - [Author](#-author)
 
 ---
@@ -74,54 +65,82 @@ Version : 11.1.7.1.4 (actively maintained, 43+ commits)
 
 ---
 
+## File Structure
+
+oslo/
+├── README.md                        ← You are here
+│
+├── loader.user.js                   ← Self-updating enterprise loader (413 lines · 21.4 KB)
+│   ├── fetchWithCache()             ← 1hr TTL cache engine (anti-429)
+│   ├── isNewerVersion()             ← Semantic version comparison
+│   ├── showUpdateModal()            ← Update scheduler + time picker UI
+│   ├── loadCoreScript()             ← Secure cloud bridge + URL whitelist
+│   ├── showLoginGate()              ← User identity + admin password gate
+│   ├── verifyLicense()              ← Expiry validation + user DB parsing
+│   └── init()                       ← Boot chain: update → license → core
+│
+├── qc-enterprise-new.user.js        ← Core application engine (3,670 lines · 198 KB)
+│   ├── UI Engine                    ← Dashboard, dark mode, panels, animations
+│   ├── Automation Engine            ← Auto-fail, image accelerator, submit
+│   ├── Data Pipeline                ← SKU extraction, fail/pass collection
+│   ├── CSV System                   ← Export, import, auto-backup
+│   ├── Cloud Sync                   ← Google Apps Script baseline lock
+│   ├── ML Forecast                  ← 7-day weighted weekday prediction
+│   └── Security Hooks               ← MutationObserver, SPA re-injection
+│
+├── qc-enterprise.user.js            ← Force update security gate (61 lines · 3.41 KB)
+│   ├── Force-update modal           ← Full-screen overlay blocker
+│   └── Anti-bypass interval         ← DOM manipulation detection (1s)
+│
+├── license.json                     ← User database (11 licensed analysts)
+│   └── Schema: { name, active, expiry } per USER-XXX key
+│
+├── qc-enterprise.txt                ← Obfuscated core payload (delivery artifact)
+│   └── 80.3 KB encoded artifact     ← Fetched at runtime via secure cloud loader
+│
+└── version.txt                      ← Current version: 11.1.7.1.4
+
+
 ## System Architecture
-╔══════════════════════════════════════════════════════════════════════╗
-║ BROWSER RUNTIME ║
-║ ║
-║ ┌──────────────────────────────────────────────────────────────┐ ║
-║ │ loader.user.js (413 lines) │ ║
-║ │ │ ║
-║ │ ┌──────────────┐ ┌────────────────┐ ┌─────────────────┐ │ ║
-║ │ │ Version Check│ │ License Gating │ │ Cache Engine │ │ ║
-║ │ │ (semver diff)│ │ (expiry + user │ │ (1hr TTL, │ │ ║
-║ │ │ │ │ DB validation)│ │ anti-429) │ │ ║
-║ │ └──────┬───────┘ └───────┬────────┘ └────────┬────────┘ │ ║
-║ │ └──────────────────┴───────────────────┘ │ ║
-║ │ │ │ ║
-║ │ Cloud Bridge (secure) │ ║
-║ │ URL whitelist + GM_xmlhttpRequest │ ║
-║ └────────────────────────────┬───────────────────────────────┘ ║
-║ │ injects ║
-║ ▼ ║
-║ ┌──────────────────────────────────────────────────────────────┐ ║
-║ │ qc-enterprise-new.user.js (3,670 lines) │ ║
-║ │ │ ║
-║ │ ┌─────────────────┐ ┌──────────────────────────────┐ │ ║
-║ │ │ UI ENGINE │ │ DATA ENGINE │ │ ║
-║ │ │ │ │ │ │ ║
-║ │ │ - Live Dashboard│ │ - CSV Export Pipeline │ │ ║
-║ │ │ - Dark Mode │ │ - localStorage StateMachine │ │ ║
-║ │ │ - Snap Panels │ │ - SKU Attribute Extraction │ │ ║
-║ │ │ - Shortcuts │ │ - Fail/Pass Data Collection │ │ ║
-║ │ │ - Animations │ │ - ML Volume Forecasting │ │ ║
-║ │ │ - Shadow DOM │ │ - Auto-backup System │ │ ║
-║ │ └─────────────────┘ └──────────────────────────────┘ │ ║
-║ └──────────────────────────────────────────────────────────────┘ ║
-║ ║
-║ ┌──────────────────────────────────────────────────────────────┐ ║
-║ │ qc-enterprise.user.js — Force Update Security Gate │ ║
-║ │ Anti-bypass DOM guard (1s interval) + Scroll Lock │ ║
-║ └──────────────────────────────────────────────────────────────┘ ║
-╚══════════════════════════════════════════════════════════════════════╝
-│ │ │
-▼ ▼ ▼
-┌─────────────────┐ ┌────────────────────┐ ┌────────────────┐
-│ Google Apps │ │ TRR Internal API │ │ localStorage │
-│ Script (Cloud) │ │ /qc_tool/fetch_ │ │ State Machine │
-│ Baseline Sync + │ │ ready_for_qc_ │ │ 40+ keys │
-│ First-Writer- │ │ tool_count │ │ (persistent) │
-│ Wins Lock │ └────────────────────┘ └────────────────┘
-└─────────────────┘
+
+┌─────────────────────────────────── BROWSER RUNTIME ───────────────────────────────────┐
+│                                                                                        │
+│  ┌─────────────────────── loader.user.js (413 lines) ──────────────────────────────┐  │
+│  │                                                                                  │  │
+│  │   Version Check          License Gating         Cache Engine                    │  │
+│  │   (semver diff)          (expiry + user          (1hr TTL,                      │  │
+│  │                           DB validation)          anti-429)                     │  │
+│  │                                                                                  │  │
+│  │              Cloud Bridge (secure)                                               │  │
+│  │              URL whitelist + GM_xmlhttpRequest                                   │  │
+│  └────────────────────────────────┬─────────────────────────────────────────────────┘  │
+│                                   │ injects                                            │
+│                                   ▼                                                    │
+│  ┌──────────────── qc-enterprise-new.user.js (3,670 lines) ──────────────────────┐    │
+│  │                                                                                │    │
+│  │  UI ENGINE                         DATA ENGINE                                 │    │
+│  │  ├── Live Dashboard                ├── CSV Export Pipeline                    │    │
+│  │  ├── Dark Mode                     ├── localStorage StateMachine              │    │
+│  │  ├── Snap Panels                   ├── SKU Attribute Extraction               │    │
+│  │  ├── Shortcuts                     ├── Fail/Pass Data Collection              │    │
+│  │  ├── Animations                    ├── Shadow DOM                             │    │
+│  │  └── ML Volume Forecasting         └── Auto-backup System                    │    │
+│  │                                                                                │    │
+│  └────────────────────────────────────────────────────────────────────────────────┘    │
+│                                                                                        │
+│  ┌──────────────── qc-enterprise.user.js ── Force Update Security Gate ────────┐      │
+│  │   Anti-bypass DOM guard (1s interval) + Scroll Lock                         │      │
+│  └────────────────────────────────────────────────────────────────────────────┘       │
+│                                                                                        │
+│         ▼                    ▼                     ▼                                   │
+│  ┌─────────────┐   ┌──────────────────┐   ┌───────────────────────┐                  │
+│  │   Google    │   │  TRR Internal    │   │     localStorage       │                  │
+│  │ Apps Script │   │       API        │   │  (40+ keys, persist.)  │                  │
+│  │   (Cloud)   │   │  /qc_tool/fetch_ │   │                        │                  │
+│  │  Baseline   │   │  State Machine   │   │  First-Writer-Wins     │                  │
+│  │  Sync +     │   │  ready_for_qc_   │   │  Lock (persistent)     │                  │
+│  └─────────────┘   └──────────────────┘   └───────────────────────┘                  │
+└────────────────────────────────────────────────────────────────────────────────────────┘
 
 ---
 
@@ -263,39 +282,31 @@ fetchTotalWorkload()
 └── Polls TRR internal API: /admin/photography/pra/qc_tool/fetch_ready_for_qc_tool_count
 └── Returns live queue depth for dashboard display
 
-text
-
 ---
 
 ### Security & License System
-┌─────────────────────────────────────────────────────────────────────┐
-│ SECURITY ARCHITECTURE (4 Layers) │
-├─────────────────────────────────────────────────────────────────────┤
-│ │
-│ LAYER 1 - loader.user.js │
-│ ├── License validation: expiry date check against license.json │
-│ ├── User identity selection + admin password gate │
-│ ├── Strict URL whitelist (therealreal.com/admin only) │
-│ └── Cloud bridge security bouncer (Google Apps Script only) │
-│ │
-│ LAYER 2 - qc-enterprise.user.js │
-│ ├── Full-screen force-update overlay (blocks all interaction) │
-│ ├── Anti-bypass interval: DOM manipulation detection every 1s │
-│ └── Scroll lock enforcement during update gate │
-│ │
-│ LAYER 3 - qc-enterprise.txt (80.3 KB) │
-│ ├── Core application logic stored as obfuscated/encoded payload │
-│ ├── Fetched at runtime via secure cloud loader │
-│ └── Never served in plain text - protects IP from reverse-eng. │
-│ │
-│ LAYER 4 - license.json │
-│ ├── User database: USER-001 to USER-011 (11 licensed analysts) │
-│ ├── Per-user: { name, active: bool, expiry: "YYYY-MM-DD" } │
-│ └── Expiry: 2030-12-30 (long-term licensed deployment) │
-│ │
-└─────────────────────────────────────────────────────────────────────┘
-
-text
+SECURITY ARCHITECTURE (4 Layers)
+│
+├── LAYER 1 — loader.user.js
+│   ├── License validation: expiry date check against license.json
+│   ├── User identity selection + admin password gate
+│   ├── Strict URL whitelist (therealreal.com/admin only)
+│   └── Cloud bridge security bouncer (Google Apps Script only)
+│
+├── LAYER 2 — qc-enterprise.user.js
+│   ├── Full-screen force-update overlay (blocks all interaction)
+│   ├── Anti-bypass interval: DOM manipulation detection every 1s
+│   └── Scroll lock enforcement during update gate
+│
+├── LAYER 3 — qc-enterprise.txt (80.3 KB)
+│   ├── Core application logic stored as obfuscated/encoded payload
+│   ├── Fetched at runtime via secure cloud loader
+│   └── Never served in plain text — protects IP from reverse-engineering
+│
+└── LAYER 4 — license.json
+    ├── User database: USER-001 to USER-011 (11 licensed analysts)
+    ├── Per-user schema: { name, active: bool, expiry: "YYYY-MM-DD" }
+    └── Expiry: 2030-12-30 (long-term licensed deployment)
 
 ---
 
@@ -344,49 +355,6 @@ SPA page transitions.
 
 // + 30 additional keys for settings, preferences, and runtime flags
 ```
-
----
-
-## File Structure
-oslo/
-│
-├── 📄 README.md ← You are here
-│
-├── 🔧 loader.user.js ← Self-updating enterprise loader
-│ │ 413 lines · 21.4 KB
-│ ├── fetchWithCache() ← 1hr TTL cache engine (anti-429)
-│ ├── isNewerVersion() ← Semantic version comparison
-│ ├── showUpdateModal() ← Update scheduler + time picker UI
-│ ├── loadCoreScript() ← Secure cloud bridge + URL whitelist
-│ ├── showLoginGate() ← User identity + admin password gate
-│ ├── verifyLicense() ← Expiry validation + user DB parsing
-│ └── init() ← Boot chain: update → license → core
-│
-├── qc-enterprise-new.user.js ← Core application engine
-│ │ 3,670 lines · 198 KB
-│ ├── UI Engine ← Dashboard, dark mode, panels, animations
-│ ├── Automation Engine ← Auto-fail, image accelerator, submit
-│ ├── Data Pipeline ← SKU extraction, fail/pass collection
-│ ├── CSV System ← Export, import, auto-backup
-│ ├── Cloud Sync ← Google Apps Script baseline lock
-│ ├── ML Forecast ← 7-day weighted weekday prediction
-│ └── Security Hooks ← MutationObserver, SPA re-injection
-│
-├── qc-enterprise.user.js ← Force update security gate
-│ │ 61 lines · 3.41 KB
-│ ├── Force-update modal ← Full-screen overlay blocker
-│ └── Anti-bypass interval ← DOM manipulation detection (1s)
-│
-├── license.json ← User database (11 licensed analysts)
-│ └── Schema: { name, active, expiry } per USER-XXX key
-│
-├── qc-enterprise.txt ← Obfuscated core payload
-│ └── 80.3 KB encoded delivery artifact
-│
-└── version.txt ← Current version: 11.1.7.1.4
-
-text
-
 ---
 
 ## Key Design Decisions

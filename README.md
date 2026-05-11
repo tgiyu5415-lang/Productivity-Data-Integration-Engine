@@ -406,7 +406,6 @@ could be deployed instantly to any analyst without installation friction.
 | Client revisions | **↓ 30%** fewer requests |
 | Data exports | **Automated daily CSV backup** (zero manual effort) |
 | Volume prediction | **7-day ML forecast** (730-day training window) |
-| Active users
 
 ## Roadmap
 

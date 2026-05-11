@@ -3,7 +3,7 @@
 <!-- Banner -->
 <div align="center">
 
-# ⚙️ ESD — QC Productivity & Data Integration Engine
+# ⚙️ ESD - QC Productivity & Data Integration Engine
 ### Enterprise Edition · v11.1.7.1.4
 
 </div>

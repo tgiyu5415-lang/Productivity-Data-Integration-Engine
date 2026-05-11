@@ -1,7 +1,7 @@
 <div align="center">
 
 <!-- Banner -->
-<img width="100%" src="https://capsule-render.vercel.app/api?type=waving&color=6C63FF&height=200&section=header&text=ESD%20%E2%80%94%20Enterprise%20Script%20Dispatcher&fontSize=36&fontColor=ffffff&fontAlignY=38&desc=QC%20Productivity%20%26%20Data%20Integration%20Engine%20%E2%80%94%20Enterprise%20Edition&descAlignY=58&descSize=16" />
+<img src="./docs/assets/banner.svg" width="100%" />
 
 <!-- Badges -->
 [![Version](https://img.shields.io/badge/version-11.1.7.1.4-6C63FF?style=for-the-badge)](./version.txt)

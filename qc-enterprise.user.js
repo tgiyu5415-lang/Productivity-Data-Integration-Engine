@@ -14,7 +14,7 @@
     overlay.id = "qc-force-update-modal";
     overlay.style.cssText = "position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.85);z-index:2147483647;display:flex;justify-content:center;align-items:center;backdrop-filter:blur(8px);font-family:sans-serif;opacity:0;transition:opacity 0.3s ease;";
 
-    // HTML Sesuai Desain Anda
+    // HTML
     overlay.innerHTML = `
         <div style="background:#1a1a1a; padding:30px; border-radius:12px; width:480px; max-width:90%; box-shadow:0 15px 40px rgba(255,77,77,0.3); border:1px solid #ff4d4d; transform:translateY(30px); transition:transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid #333; padding-bottom:10px;">
@@ -46,7 +46,7 @@
     btnUpdate.onmouseleave = () => { btnUpdate.style.background = "#ff4d4d"; };
 
     btnUpdate.onclick = function() {
-        // Arahkan browser ke URL Loader baru (Tampermonkey akan otomatis memicu halaman instalasi)
+        // Arahkan browser ke URL Loader baru 
         window.location.href = NEW_LOADER_URL;
     };
 

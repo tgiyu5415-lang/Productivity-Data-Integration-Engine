@@ -14,7 +14,7 @@
 
 <br/>
 
-> **A production-grade, full-stack enterprise application** built in vanilla JavaScript —  
+> **A production-grade, full-stack enterprise application** built in vanilla JavaScript -  
 > delivering real-time QC automation, a structured data pipeline, ML-driven volume  
 > forecasting, multi-user license management, and cloud sync for a team of 11 analysts  
 > processing **1,000+ items per day**.
@@ -54,20 +54,18 @@ application built entirely in vanilla JavaScript and delivered as a browser user
 the Tampermonkey runtime.
 
 Rather than building a separate web application, ESD overlays and **fully extends a legacy
-enterprise QC platform** — injecting a complete UI, data collection system, automation engine,
+enterprise QC platform** - injecting a complete UI, data collection system, automation engine,
 ML forecast module, and cloud synchronization layer without any modifications to the host platform's
 backend or codebase.
 
 It runs in production for **11 licensed QC analysts**, replacing a fully manual,
 spreadsheet-based workflow with a real-time automated data system.
 Company : The RealReal (e-commerce luxury resale platform)
-Team : QC Operations — Photography & Product Review
+Team : QC Operations - Photography & Product Review
 Users : 11 licensed analysts (USER-001 to USER-011)
-Throughput : 1,000+ items / day
+Throughput : 2,500+ items / day
 Accuracy : 98–99% enforced
 Version : 11.1.7.1.4 (actively maintained, 43+ commits)
-
-text
 
 ---
 
@@ -120,25 +118,23 @@ text
 │ Wins Lock │ └────────────────────┘ └────────────────┘
 └─────────────────┘
 
-text
-
 ---
 
 ## Features
 
 ### Frontend & UI Engine
 
-ESD injects a complete, production-grade UI system directly into the QC platform's DOM —
+ESD injects a complete, production-grade UI system directly into the QC platform's DOM -
 no external framework, no bundler, no build step.
 
 | Feature | Implementation |
 |---|---|
-| **Live QC Dashboard** | Real-time pass/fail counters, progress bars, pacing targets — refreshed every 2s |
+| **Live QC Dashboard** | Real-time pass/fail counters, progress bars, pacing targets - refreshed every 2s |
 | **Dark Mode** | Full CSS injection with borderless slate theme, persisted via localStorage |
 | **Magnetic Snap Panels** | 8-directional panel linking with `ResizeObserver` for auto-save of dimensions |
-| **Smart Submit** | 1–5s configurable countdown with ESC cancel, neon flash feedback |
+| **Smart Submit** | 1-5s configurable countdown with ESC cancel, neon flash feedback |
 | **Squish Animations** | Web Animations API micro-interactions on every QC action |
-| **Shadow DOM** | Isolated animation layer — prevents style leakage, eliminates flicker |
+| **Shadow DOM** | Isolated animation layer - prevents style leakage, eliminates flicker |
 | **Resizable Panels** | Drag-to-resize with automatic dimension persistence |
 | **Performance Tracker** | `DOMContentLoaded` + full load timing logged on every session |
 | **Auto-Start QC** | `Enter` key from homepage triggers queue entry automatically |
@@ -151,7 +147,7 @@ humanClick(element)
 └── Adds random jitter (80–450ms) to simulate real human timing
 
 processNextMultiFail(reasonValue)
-└── Batch-fail robot — loops through staged fails with configured reason
+└── Batch-fail robot - loops through staged fails with configured reason
 └── Applies humanized delays between each action
 
 scanEnterpriseWorkload() [every 3s]
@@ -160,11 +156,11 @@ scanEnterpriseWorkload() [every 3s]
 
 triggerUniversalSubmit()
 └── Smart submit with countdown, ESC cancel, and neon flash
-└── Event delegation — works across all dynamic DOM states
+└── Event delegation - works across all dynamic DOM states
 
 MutationObserver [always-on]
 └── Re-injects application on TurboLinks/Hotwire SPA navigation
-└── No page reload required — hooks into every route transition
+└── No page reload required - hooks into every route transition
 
 text
 
@@ -217,12 +213,8 @@ text
 │ syncWithCloudBrain() → GAS baseline lock at 7AM │
 └────────────────────────────────────────────────────────────────┘
 
-text
-
 **CSV Export Schema:**
 date, user_id, sku, brand, color, taxons, auth, image_url, status, reason
-
-text
 
 ---
 
@@ -275,23 +267,23 @@ text
 │ SECURITY ARCHITECTURE (4 Layers) │
 ├─────────────────────────────────────────────────────────────────────┤
 │ │
-│ LAYER 1 — loader.user.js │
+│ LAYER 1 - loader.user.js │
 │ ├── License validation: expiry date check against license.json │
 │ ├── User identity selection + admin password gate │
 │ ├── Strict URL whitelist (therealreal.com/admin only) │
 │ └── Cloud bridge security bouncer (Google Apps Script only) │
 │ │
-│ LAYER 2 — qc-enterprise.user.js │
+│ LAYER 2 - qc-enterprise.user.js │
 │ ├── Full-screen force-update overlay (blocks all interaction) │
 │ ├── Anti-bypass interval: DOM manipulation detection every 1s │
 │ └── Scroll lock enforcement during update gate │
 │ │
-│ LAYER 3 — qc-enterprise.txt (80.3 KB) │
+│ LAYER 3 - qc-enterprise.txt (80.3 KB) │
 │ ├── Core application logic stored as obfuscated/encoded payload │
 │ ├── Fetched at runtime via secure cloud loader │
-│ └── Never served in plain text — protects IP from reverse-eng. │
+│ └── Never served in plain text - protects IP from reverse-eng. │
 │ │
-│ LAYER 4 — license.json │
+│ LAYER 4 - license.json │
 │ ├── User database: USER-001 to USER-011 (11 licensed analysts) │
 │ ├── Per-user: { name, active: bool, expiry: "YYYY-MM-DD" } │
 │ └── Expiry: 2030-12-30 (long-term licensed deployment) │
@@ -306,7 +298,7 @@ text
 
 | Category | Technology | Usage |
 |---|---|---|
-| **Language** | JavaScript ES6+ (Vanilla) | Entire application — no framework |
+| **Language** | JavaScript ES6+ (Vanilla) | Entire application - no framework |
 | **Runtime** | Tampermonkey / Greasemonkey | Userscript engine / deployment target |
 | **Storage** | `localStorage` State Machine | 40+ keys, full session persistence |
 | **Cloud Backend** | Google Apps Script | REST endpoint, 7AM baseline sync |
@@ -322,7 +314,7 @@ text
 
 ## State Management
 
-All application state is managed through a structured `localStorage` State Machine —
+All application state is managed through a structured `localStorage` State Machine -
 enabling zero-latency reads, full offline capability, and session persistence across
 SPA page transitions.
 
@@ -402,14 +394,14 @@ persistence across SPA page transitions — all without any server infrastructur
 
 ### 2. Cloud-Local Hybrid Sync (First-Writer-Wins)
 The 7AM baseline workload volume is synchronized across all 11 users via Google Apps Script.
-The first analyst to check in at 7AM **locks the volume for all others** — preventing data
+The first analyst to check in at 7AM **locks the volume for all others** - preventing data
 drift in a distributed concurrent team session. All subsequent users read the locked value
 rather than fetching independently.
 
 ### 3. Obfuscated Payload Delivery
 Core application logic (`qc-enterprise.txt`) is stored as an **80KB encoded payload**,
 fetched at runtime by the loader rather than committed in plain text. This protects IP,
-prevents reverse engineering by unauthorized users, and enforces version compliance —
+prevents reverse engineering by unauthorized users, and enforces version compliance -
 users cannot run outdated code without passing through the update gate.
 
 ### 4. Humanized Automation
@@ -419,7 +411,7 @@ platform while allowing high-throughput automated workflows.
 
 ### 5. SPA-Aware Injection
 A persistent `MutationObserver` hooks into TurboLinks/Hotwire navigation events to
-re-inject the full application on every route transition — no page reload required.
+re-inject the full application on every route transition - no page reload required.
 This is critical for maintaining state continuity in a Rails SPA environment.
 
 ### 6. Zero-Dependency Architecture

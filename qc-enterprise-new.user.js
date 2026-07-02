@@ -3,24 +3,24 @@
  * @name        QC Productivity & Data Integration Engine - Enterprise Edition
  * @copyright   © 2026 Tgiyu-lang5415. All Rights Reserved.
  * @license     Proprietary and Confidential. Unauthorized modification is strictly prohibited.
- * * ATTN: INFORMATION TECHNOLOGY & INFRASECURITY TEAM (THE REALREAL)
+ * * ATTN: INFORMATION TECHNOLOGY & INFRASECURITY TEAM
  * ----------------------------------------------------------------------------------------------
  * This script is a benign, client-side workflow optimization tool designed strictly to enhance
  * UI ergonomics (via shortcuts), accessibility, and local data aggregation for the QC team.
  * * SECURITY & COMPLIANCE POSTURE:
  * 1. 100% Client-Side: All tracking data is stored purely in the local browser (`localStorage`).
- * 2. Zero Exfiltration: This script DOES NOT send, beacon, or transmit any TRR data to external servers.
+ * 2. Zero Exfiltration: This script DOES NOT send, beacon, or transmit any data to external servers.
  * 3. Transparent Execution: The code is deliberately unobfuscated for full transparency and auditing.
  * 4. Server-Friendly: Includes micro-jittering and debounce mechanics intentionally designed to
- * prevent rate-limiting and reduce concurrent load (Thundering Herd) on TRR backends.
- * * This tool operates entirely as an overlay and respects the underlying business logic of TRR.
+ * prevent rate-limiting and reduce concurrent load (Thundering Herd) on backends.
+ * * This tool operates entirely as an overlay and respects the underlying business logic of.
  * ==============================================================================================
  */
 
 (function() {
     'use strict';
 
-    // Pesan khusus untuk Engineer TRR jika mereka memantau Console Browser
+
     console.info(
         "%cQC Productivity & Data Integration - Enterprise Edition %c\nClient-side productivity script loaded. Zero external tracking. Server-friendly jittering enabled.",
         "color: #1e293b; background: #00ff88; font-weight: bold; padding: 2px 6px; border-radius: 4px;",
@@ -82,17 +82,17 @@
     window.scrollTo(0, 0);
     // ===== CONFIG =====
     const USERS = {
-        "USER-001": "Aditia Rahman",
-        "USER-002": "Ahmad Santoso",
-        "USER-003": "Amar Maulana",
-        "USER-004": "Ricka Yustira",
-        "USER-005": "Dwi Prasetyo",
-        "USER-006": "Mohammad Hadi Putra",
-        "USER-007": "Tirangga Yala",
-        "USER-008": "Tiya Alfianti",
-        "USER-009": "Rima Alfiany",
-        "USER-010": "Tonny Bagus Prakarsa",
-        "USER-011": "Andrew Christofer Gieraldo"
+        "USER-001": "",
+        "USER-002": "",
+        "USER-003": "",
+        "USER-004": "",
+        "USER-005": "",
+        "USER-006": "",
+        "USER-007": "",
+        "USER-008": "",
+        "USER-009": "",
+        "USER-010": "",
+        "USER-011": ""
     };
     const QC_RESET_HOUR = 23;
     const QC_RESET_MINUTE = 59;
@@ -244,14 +244,14 @@
         console.log("INIT RUNNING");
 
         // ==============================================================
-        // 📡 LIVE VOLUME RADAR (SINGLE FETCH / STEALTH MODE)
+        // 📡 LIVE VOLUME RADAR
         // Mengetuk pintu server TRR HANYA 1X saat halaman pertama kali dimuat.
         // ==============================================================
         window.__qcTotalVolume = "Loading...";
 
         async function fetchTotalWorkload() {
             try {
-                // Tembak URL API 1x saja secara diam-diam
+            
                 const response = await fetch('/admin/photography/pra/qc_tool/fetch_ready_for_qc_tool_count', {
                     headers: { 'Accept': 'application/json' }
                 });
@@ -259,7 +259,7 @@
                 if (response.ok) {
                     const data = await response.json();
                     if (data && data.item_count !== undefined) {
-                        window.__qcTotalVolume = data.item_count.toLocaleString('id-ID'); // Format 22.969
+                        window.__qcTotalVolume = data.item_count.toLocaleString('id-ID'); // Format angka
 
                         // Tuliskan ke layar
                         const totalVolEl = document.getElementById("qc-total-vol");
@@ -398,18 +398,18 @@
             else syncWithCloudBrain();
         }, 5000);
 
-        // 🟢 STEALTH MODE: Kunci radar agar hanya menembak TRR API jika benar-benar dibutuhkan
+    
         if (!window.__qcWorkloadFetched) {
             window.__qcWorkloadFetched = true; // Langsung kunci!
 
             setTimeout(() => {
-                let isAndrewAdmin = localStorage.getItem("qcActiveLicense") === "USER-011";
+                let isAdmin = localStorage.getItem("qcActiveLicense") === "USER-011";
                 let lockedDate = localStorage.getItem("qcWorkloadLockDate");
                 let todayStr = new Date().toISOString().slice(0, 10);
 
                 // Jika Cloud Brain (Google) SUDAH memberikan angka baseline hari ini,
-                // User biasa TIDAK PERLU menembak API TRR sama sekali. (0% Beban Server TRR)
-                if (isAndrewAdmin || lockedDate !== todayStr) {
+                // User biasa TIDAK PERLU menembak API TRR sama sekali. (0% Beban Server)
+                if (isAdmin || lockedDate !== todayStr) {
                     fetchTotalWorkload();
                 } else {
                     console.log("%c[QC SYSTEM] Baseline already acquired from Cloud.", "color: #b582fa; font-style: italic;");
@@ -1397,7 +1397,7 @@
                         const undoBtn = card.querySelector(".qc-row__undo-exception-button");
                         // Eksekusi hanya jika gambar tersebut memang berstatus Fail (tombol Undo-nya muncul)
                         if (undoBtn && window.getComputedStyle(undoBtn).display !== "none") {
-                            humanClick(undoBtn); // 🪄 Tembak tombol Undo!
+                            Click(undoBtn); // 🪄 Tembak tombol Undo!
 
                             // Efek visual penyembuhan (Hijau Neon)
                             card.style.boxShadow = "0 15px 40px rgba(0, 255, 136, 0.8)";
@@ -2596,7 +2596,7 @@
                         }
                     };
                 } else {
-                    // 3. JURUS SNIPER SUPER RINGAN
+                
                     // Memanfaatkan loop "scanEnterpriseWorkload" yang sudah ada (jalan tiap 3 detik).
                     // Kita tidak pakai setInterval baru, jadi 0% beban tambahan untuk CPU/RAM!
                     let initTime = parseInt(img.dataset.qcHealInit);
@@ -2934,7 +2934,7 @@
                     }
                 };
 
-                // 🖱️ DRAG AND DROP EVENT LISTENERS (Only attach if Andrew)
+                // 🖱️ DRAG AND DROP EVENT LISTENERS (Only attach if Admin)
                 const dropZone = document.getElementById("qc-drop-zone");
                 if (dropZone) {
                     dropZone.addEventListener('dragover', (e) => {
@@ -3021,7 +3021,7 @@
             if (e.clientX >= rectDash.right - 20 && e.clientY >= rectDash.bottom - 20) return;
             dashDrag = true;
             hasMoved = false; // 🟢 TAMBAHKAN INI
-            // ... (kode lainnya tetap)
+            
             // Gunakan getBoundingClientRect agar kursor akurat
             let rect = dash.getBoundingClientRect();
             dashOffsetX = e.clientX - rect.left;
@@ -3089,7 +3089,7 @@
             let indicatorHTML = "";
             let workloadInfoHTML = "";
 
-            // 🛑 USER-007 (Tirangga) sees absolutely nothing.
+            // 🛑 USER-007 sees absolutely nothing.
             if (!isTiranggaNow) {
 
                 // Activate indicator every day from 7:00 AM onwards
@@ -3138,7 +3138,7 @@
                     indicatorHTML = `<span style="font-size:14px; text-shadow: 0 0 5px rgba(255,255,255,0.3); pointer-events:none; margin-left:auto;" title="Today's Target Status">${indicatorSymbol}</span>`;
                 }
 
-                // 🛑 ONLY USER-011 (Andrew) gets the Raw Numbers in the mini dash
+                // 🛑 ONLY USER-011 gets the Raw Numbers in the mini dash
                 if (isAndrewNow) {
                     workloadInfoHTML = `
                         <div style="font-size:10px; color:#aaa; letter-spacing:0.5px; margin-top:4px; padding-bottom: 4px;">
@@ -3317,7 +3317,7 @@
             overlay.id = "qc-update-modal";
             overlay.style.cssText = "position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.8);z-index:2147483647;display:flex;justify-content:center;align-items:center;backdrop-filter:blur(5px);font-family:sans-serif;opacity:0;transition:opacity 0.3s ease;";
 
-            // 🟢 LOGIKA PENYEMBUNYIAN: Jika yang login adalah Tirangga, string ini kosong. Jika user lain, string ini berisi info fitur.
+         
             const indicatorFeatureHTML = isTirangga ? "" : `<li style="margin-bottom:6px;">
         <b>📊 Smart Queue Indicator:</b> Know your workload before you even begin. An intuitive, color-responsive badge adapts in real-time to today's item count. From green (< 25K) to yellow, straight through to red (29K+), you are always in perfect sync with the day's momentum.
     </li>`;

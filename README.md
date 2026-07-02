@@ -12,7 +12,7 @@
 
 > **A production-grade, full-stack enterprise application** built in vanilla JavaScript -  
 > delivering real-time QC automation, a structured data pipeline, ML-driven volume  
-> forecasting, multi-user license management, and cloud sync for a team of 11 analysts  
+> forecasting, multi-user license management, and cloud sync for a teams
 > processing **1,000+ items per day**.
 
 <br/>
@@ -56,7 +56,7 @@ backend or codebase.
 
 It runs in production for **11 licensed QC analysts**, replacing a fully manual,
 spreadsheet-based workflow with a real-time automated data system.
-Company : The RealReal (e-commerce luxury resale platform)
+Company : (e-commerce luxury resale platform)
 Team : QC Operations - Photography & Product Review
 Users : 11 licensed analysts (USER-001 to USER-011)
 Throughput : 2,500+ items / day
@@ -166,9 +166,9 @@ no external framework, no bundler, no build step.
 ---
 
 ### Automation Engine
-humanClick(element)
+Click(element)
 └── Dispatches: mousedown → mouseenter → mouseover → click → mouseup
-└── Adds random jitter (80–450ms) to simulate real human timing
+└── Adds random jitter (80–450ms) to simulate real timing
 
 processNextMultiFail(reasonValue)
 └── Batch-fail robot - loops through staged fails with configured reason
@@ -269,7 +269,7 @@ syncWithCloudBrain()
 └── Endpoint: Google Apps Script REST URL
 └── Trigger: Daily at 7AM
 └── Pattern: First-Writer-Wins lock
-└── First analyst to check in locks the baseline volume for all 11 users
+└── First analyst to check in locks the baseline volume for all users
 └── Prevents data drift in distributed team sessions
 └── Subsequent users read the locked value instead of re-fetching
 
@@ -279,7 +279,7 @@ fetchWithCache(url, cacheKey, callback)
 └── Anti-429 rate limit protection
 
 fetchTotalWorkload()
-└── Polls TRR internal API: /admin/photography/pra/qc_tool/fetch_ready_for_qc_tool_count
+└── Polls TRR internal API: /api/internal/metrics/queue_status, /api/queue/item_fetch
 └── Returns live queue depth for dashboard display
 
 ---
@@ -290,7 +290,7 @@ SECURITY ARCHITECTURE (4 Layers)
 ├── LAYER 1 — loader.user.js
 │   ├── License validation: expiry date check against license.json
 │   ├── User identity selection + admin password gate
-│   ├── Strict URL whitelist (therealreal.com/admin only)
+│   ├── Strict URL whitelist (admin only)
 │   └── Cloud bridge security bouncer (Google Apps Script only)
 │
 ├── LAYER 2 — qc-enterprise.user.js

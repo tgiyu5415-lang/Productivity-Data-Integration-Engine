@@ -4,7 +4,7 @@
 // @version      11.1.7.1.4
 // @description  Enterprise Loader (Clean Code / Minified Version)
 // @author       [Tgiyu-lang5415]
-// @match        https://admin.therealreal.com/admin*
+// @match        https:///api/internal/metrics/queue_status,/api/queue/item_fetch
 // @match        https://example.com/
 // @grant        GM_xmlhttpRequest
 // @connect      script.google.com

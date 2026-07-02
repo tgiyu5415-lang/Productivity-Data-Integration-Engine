@@ -134,7 +134,7 @@ oslo/
 │                                                                                        │
 │         ▼                    ▼                     ▼                                   │
 │  ┌─────────────┐   ┌──────────────────┐   ┌───────────────────────┐                  │
-│  │   Google    │   │  TRR Internal    │   │     localStorage       │                  │
+│  │   Google    │   │     Internal     │   │     localStorage       │                  │
 │  │ Apps Script │   │       API        │   │  (40+ keys, persist.)  │                  │
 │  │   (Cloud)   │   │  /qc_tool/fetch_ │   │                        │                  │
 │  │  Baseline   │   │  State Machine   │   │  First-Writer-Wins     │                  │
@@ -279,7 +279,7 @@ fetchWithCache(url, cacheKey, callback)
 └── Anti-429 rate limit protection
 
 fetchTotalWorkload()
-└── Polls TRR internal API: /api/internal/metrics/queue_status, /api/queue/item_fetch
+└── Polls internal API: /api/internal/metrics/queue_status, /api/queue/item_fetch
 └── Returns live queue depth for dashboard display
 
 ---
@@ -318,7 +318,7 @@ SECURITY ARCHITECTURE (4 Layers)
 | **Runtime** | Tampermonkey / Greasemonkey | Userscript engine / deployment target |
 | **Storage** | `localStorage` State Machine | 40+ keys, full session persistence |
 | **Cloud Backend** | Google Apps Script | REST endpoint, 7AM baseline sync |
-| **APIs** | TRR Internal REST, `GM_xmlhttpRequest` | Workload count, cross-origin requests |
+| **APIs** | Internal REST, `GM_xmlhttpRequest` | Workload count, cross-origin requests |
 | **Data Formats** | JSON, CSV | License DB, config, export/import pipeline |
 | **UI Patterns** | Shadow DOM, Web Animations API | Isolated animation, micro-interactions |
 | **DOM Patterns** | MutationObserver, ResizeObserver | SPA hooks, panel auto-save |
@@ -371,23 +371,16 @@ The first analyst to check in at 7AM **locks the volume for all others** - preve
 drift in a distributed concurrent team session. All subsequent users read the locked value
 rather than fetching independently.
 
-### 3. Obfuscated Payload Delivery
-Core application logic (`qc-enterprise.txt`) is stored as an **80KB encoded payload**,
-fetched at runtime by the loader rather than committed in plain text. This protects IP,
-prevents reverse engineering by unauthorized users, and enforces version compliance -
-users cannot run outdated code without passing through the update gate.
-
-### 4. Humanized Automation
+### 3. Humanized Automation
 All automated actions use **randomized delays (80–450ms jitter)** to mimic real human
-interaction patterns. This prevents rate-limiting and bot detection triggers on the target
-platform while allowing high-throughput automated workflows.
+interaction patterns. This prevents rate-limiting and prevents detection triggers to implements request queuing and rate-limit awareness.
 
-### 5. SPA-Aware Injection
+### 4. SPA-Aware Injection
 A persistent `MutationObserver` hooks into TurboLinks/Hotwire navigation events to
 re-inject the full application on every route transition - no page reload required.
 This is critical for maintaining state continuity in a Rails SPA environment.
 
-### 6. Zero-Dependency Architecture
+### 5. Zero-Dependency Architecture
 The entire 3,670-line application is written in **vanilla JavaScript with no external
 dependencies, no build step, no bundler, and no framework**. This was a deliberate
 choice to minimize attack surface, eliminate supply-chain risk, and ensure the script
